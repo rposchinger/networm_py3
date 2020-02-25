@@ -1,0 +1,5 @@
+netifaces
+python-nmap
+netaddr
+paramiko
+termcolor
