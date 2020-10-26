@@ -4,9 +4,8 @@ Python worm that spreads across local networks.
 
 The worm tries to brute-force root login data and spreads via SSH/SFTP. 
 It can be used to measure worm propagation in test networks without real malware. 
-The worm has been developed for the evaluation of an MTD (Moving Target Defense) network. 
-It is part of a Master’s thesis project at LMU and UniBw M:
-[Evaluation of network-level Moving Target Defense Strategies](http://www.nm.ifi.lmu.de/teaching/Ausschreibungen/Diplomarbeiten/ma-network-mtd/)
+The worm has been developed for the evaluation of [OpenMTD](https://github.com/rposchinger/OpenMTD). 
+It is part of a research project at UniBw M.
 
 ## Author
 Richard Poschinger 
